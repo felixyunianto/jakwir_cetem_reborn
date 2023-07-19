@@ -33,7 +33,7 @@ class RegulationView extends GetView<RegulationController> {
             children: [
               numberedListRegulation(akteKelahiranData, "NUMBER_LIST"),
               numberedListRegulation(akteKematian, "NUMBER_LIST"),
-              numberedListRegulation(ktpElektronik, "KTP"),
+              numberedListRegulation(perpindahanKeluar, "NUMBER_LIST"),
               numberedListRegulation(kartuIdentitasAnak, "NUMBER_LIST"),
             ],
           ),

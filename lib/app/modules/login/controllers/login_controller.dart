@@ -55,6 +55,7 @@ class LoginController extends GetxController with CacheManager {
       Map<String, dynamic> data =
           (json.decode(res.body) as Map<String, dynamic>)["data"][0];
       saveToken(data["token"]);
+      saveUser(jsonEncode(data["warga"]));
       loading.value = false;
 
       return true;

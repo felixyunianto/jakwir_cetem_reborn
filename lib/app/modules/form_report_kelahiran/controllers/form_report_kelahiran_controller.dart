@@ -251,15 +251,15 @@ class FormReportKelahiranController extends GetxController with CacheManager {
   void submit() {
     if (akteKelahiranFormKey.currentState!.validate()) {
       submitAkteKelahiran().then((res) {
-        // if (res.isNotEmpty) {
-        //   Get.snackbar(
-        //       "Berhasil", "Permohonan akta kelahiran berhasil terkirim");
-        //   Timer(Duration(seconds: 2), () {
-        //     Get.offNamed(Routes.HOME);
-        //   });
-        // } else {
-        //   Get.snackbar("Gagal", "Permohonan akta kelahiran gagal terkirim");
-        // }
+        if (res.isNotEmpty) {
+          Get.snackbar(
+              "Berhasil", "Permohonan akta kelahiran berhasil terkirim");
+          Timer(Duration(seconds: 2), () {
+            Get.offAndToNamed(Routes.HOME);
+          });
+        } else {
+          Get.snackbar("Gagal", "Permohonan akta kelahiran gagal terkirim");
+        }
       });
     }
   }
@@ -293,30 +293,7 @@ class FormReportKelahiranController extends GetxController with CacheManager {
           "nik_saksi2_id": nikSaksi2Controller.text,
           "nik_pelapor_id": nikPelaporController.text
         }));
-
-        print(jsonEncode({
-          'no_surat_keterangan_lahir': noSuratKeteranganLahirController.text,
-          'nama': namaController.text,
-          'nokk_id': noKKController.text,
-          'tempat_lahir_id': tempatLahirSelected['id'],
-          'tanggal_lahir': tanggalLahirController.text,
-          'jenis_kelahiran_id': jenisKelahiranController['id'],
-          'kelahiran_ke': kelahiranKeController.text,
-          'id_kelurahan_id': kelurahanSelected['id'],
-          'penolong_kelahiran_id': penolongKelahiranSelected['id'],
-          'berat': int.parse(beratController.text),
-          'panjang': int.parse(panjangController.text),
-          // "surat_keterangan_lahir": suratKelahiranVal.value,
-          "akta_nikah": noAktaNikahController.text,
-          // "akta_nikah_img": filePickerVal.value,
-          "id_kelurahan_lapor_id": kelurahanPelaporSelected['id'],
-          "nik_bapak_id": nikBapakController.text,
-          "nik_ibu_id": nikIbuController.text,
-          "nik_saksi1_id": nikSaksi1Controller.text,
-          "nik_saksi2_id": nikSaksi2Controller.text,
-          "nik_pelapor_id": nikPelaporController.text
-        }));
-
+    print(res.body);
     if (res.statusCode == 200) {
       // Map<String, dynamic> data = (json.decode(res.body) as Map<String, dynamic>)["data"];
       // loading.value = false;

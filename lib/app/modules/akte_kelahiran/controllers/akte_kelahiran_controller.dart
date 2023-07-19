@@ -16,6 +16,8 @@ class AkteKelahiranController extends GetxController with CacheManager {
 
   var familyList = [].obs;
 
+  var listPermohonan = [].obs;
+
   String? validator(String? value) {
     if (value == "") {
       return 'Harus diisi';
@@ -34,8 +36,11 @@ class AkteKelahiranController extends GetxController with CacheManager {
     if (kKFormKey.currentState!.validate()) {
       getKKList(kkController.text).then((value) {
         familyList.value = value!;
+        value.forEach((element) {
+          getListPermohonanAkteKelahiran(element['nik']);
+        });
       });
-    }else{
+    } else {
       Get.snackbar("Warning", "Isi field nomor kk terlebih dahulu");
     }
   }
@@ -53,6 +58,7 @@ class AkteKelahiranController extends GetxController with CacheManager {
     if (res.statusCode == 200) {
       List<dynamic> data =
           (json.decode(res.body) as Map<String, dynamic>)["data"];
+
       return data;
     }
     return null;
@@ -61,13 +67,38 @@ class AkteKelahiranController extends GetxController with CacheManager {
   void resetFindKK() {
     kkController.text = '';
     familyList.value = [];
+    listPermohonan.value = [];
   }
 
   void submitBabyNoNIK() {
-    if(babyNoNIKFormKey.currentState!.validate()){
-      Get.toNamed(Routes.FORM_REPORT_KELAHIRAN, arguments: [
-        null, nikBabyNoNIK.text
-      ]);
+    if (babyNoNIKFormKey.currentState!.validate()) {
+      Get.toNamed(Routes.FORM_REPORT_KELAHIRAN,
+          arguments: [null, nikBabyNoNIK.text]);
+    }
+  }
+
+  Future<dynamic> getListPermohonanAkteKelahiran(
+      String nikKepalaKeluarga) async {
+    Uri url =
+        Uri.parse("$BASE_URL_API/aktakelahiran/pemohon/$nikKepalaKeluarga");
+    var res = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': "Bearer ${getToken()}"
+      },
+    );
+
+    if (res.statusCode == 200) {
+      List<dynamic> data =
+          (json.decode(res.body) as Map<String, dynamic>)["data"];
+
+      data.forEach((element) {
+        listPermohonan.add(Map<String, dynamic>.from(element));
+      });
+      return data;
+    } else {
+      listPermohonan.value = [];
     }
   }
 }

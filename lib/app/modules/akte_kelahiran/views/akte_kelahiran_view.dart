@@ -43,10 +43,108 @@ class AkteKelahiranView extends GetView<AkteKelahiranController> {
                   ),
                   Obx((() => Visibility(
                       visible: controller.familyList.isNotEmpty ? true : false,
-                      child: listkk(context))))
+                      child: listkk(context)))),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Obx((() => Visibility(
+                      visible:
+                          controller.listPermohonan.isNotEmpty ? true : false,
+                      child: listPermohonan())))
                 ],
               ),
             )));
+  }
+
+  Container listPermohonan() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(18),
+      color: Colors.white,
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        const Text(
+          "Daftar Permohonan Akte Kelahiran",
+          style: TextStyle(fontSize: 12),
+        ),
+        const SizedBox(
+          height: 12,
+        ),
+        Table(
+          border: TableBorder.all(color: Colors.black),
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          children: [
+            const TableRow(decoration: BoxDecoration(color: Colors.blue), children: [
+              TableCell(
+                verticalAlignment: TableCellVerticalAlignment.middle,
+                child: Padding(
+                  padding: EdgeInsets.all(6),
+                  child: Text(
+                    "No. Register",
+                    style: TextStyle(fontSize: 12, color: Colors.white),
+                  ),
+                ),
+              ),
+              TableCell(
+                verticalAlignment: TableCellVerticalAlignment.middle,
+                child: Padding(
+                  padding: EdgeInsets.all(6),
+                  child: Text(
+                    "Nama Bayi",
+                    style: TextStyle(fontSize: 12, color: Colors.white),
+                  ),
+                ),
+              ),
+              TableCell(
+                verticalAlignment: TableCellVerticalAlignment.middle,
+                child: Padding(
+                  padding: EdgeInsets.all(6),
+                  child: Text(
+                    "Status",
+                    style: TextStyle(fontSize: 12, color: Colors.white),
+                  ),
+                ),
+              ),
+            ]),
+            ...List.generate(controller.listPermohonan.length, (index) {
+              dynamic data = controller.listPermohonan[index];
+              return TableRow(children: [
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.middle,
+                  child: Padding(
+                    padding: EdgeInsets.all(6),
+                    child: Text(
+                      data["no_surat_keterangan_lahir"],
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ),
+                ),
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.middle,
+                  child: Padding(
+                    padding: EdgeInsets.all(6),
+                    child: Text(
+                      data["nama"],
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ),
+                ),
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.middle,
+                  child: Padding(
+                    
+                    padding: EdgeInsets.all(6),
+                    child: Text(
+                      data["published_at"] == null ? "Proses" : "Siap Ambil",
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ),
+                ),
+              ]);
+            })
+          ],
+        )
+      ]),
+    );
   }
 
   Container listkk(BuildContext context) {

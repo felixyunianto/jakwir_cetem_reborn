@@ -42,7 +42,14 @@ class AkteKematianView extends GetView<AkteKematianController> {
                   ),
                   Obx((() => Visibility(
                       visible: controller.familyList.isNotEmpty ? true : false,
-                      child: listkk())))
+                      child: listkk()))),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Obx((() => Visibility(
+                      visible:
+                          controller.listPermohonan.isNotEmpty ? true : false,
+                      child: listPermohonan())))
                 ],
               ),
             )));
@@ -89,20 +96,27 @@ class AkteKematianView extends GetView<AkteKematianController> {
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: (SizedBox(
                         height: 24,
-                        child: controller.familyList[index]["meninggal"] == null
-                            ? ElevatedButton(
-                                onPressed: () {
-                                  Get.offAndToNamed(Routes.FORM_REPORT,
-                                      arguments: controller.familyList[index]);
-                                },
-                                child: const Text(
-                                  "+ LAPOR",
-                                  style: TextStyle(fontSize: 10),
-                                ))
-                            : Text(
-                                "-",
+                        child: controller.familyList[index]["nik"] ==
+                                controller.userLogin["nik"]
+                            ? (Text(
+                                "(Pelapor)",
                                 style: TextStyle(fontSize: 12),
-                              ),
+                              ))
+                            : controller.familyList[index]["meninggal"] == null
+                                ? ElevatedButton(
+                                    onPressed: () {
+                                      Get.offAndToNamed(Routes.FORM_REPORT,
+                                          arguments:
+                                              controller.familyList[index]);
+                                    },
+                                    child: const Text(
+                                      "+ LAPOR",
+                                      style: TextStyle(fontSize: 10),
+                                    ))
+                                : Text(
+                                    "-",
+                                    style: TextStyle(fontSize: 12),
+                                  ),
                       )),
                     ))),
                 const SizedBox(
@@ -296,6 +310,78 @@ class AkteKematianView extends GetView<AkteKematianController> {
           style: const TextStyle(fontSize: 12),
         )
       ],
+    );
+  }
+
+  Container listPermohonan() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(18),
+      color: Colors.white,
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        const Text(
+          "Daftar Permohonan Akte Kematian",
+          style: TextStyle(fontSize: 12),
+        ),
+        const SizedBox(
+          height: 12,
+        ),
+        Table(
+          border: TableBorder.all(color: Colors.black),
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          children: [
+            const TableRow(
+                decoration: BoxDecoration(color: Colors.blue),
+                children: [
+                  TableCell(
+                    verticalAlignment: TableCellVerticalAlignment.middle,
+                    child: Padding(
+                      padding: EdgeInsets.all(6),
+                      child: Text(
+                        "No. Register",
+                        style: TextStyle(fontSize: 12, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  TableCell(
+                    verticalAlignment: TableCellVerticalAlignment.middle,
+                    child: Padding(
+                      padding: EdgeInsets.all(6),
+                      child: Text(
+                        "Status",
+                        style: TextStyle(fontSize: 12, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ]),
+            ...List.generate(controller.listPermohonan.length, (index) {
+              dynamic data = controller.listPermohonan[index];
+              return TableRow(children: [
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.middle,
+                  child: Padding(
+                    padding: EdgeInsets.all(6),
+                    child: Text(
+                      data["no_surat_keterangan"],
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ),
+                ),
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.middle,
+                  child: Padding(
+                    padding: EdgeInsets.all(6),
+                    child: Text(
+                      data["published_at"] == null ? "Proses" : "Siap Ambil",
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ),
+                ),
+              ]);
+            })
+          ],
+        )
+      ]),
     );
   }
 }

@@ -39,7 +39,14 @@ class PerpindahanKeluarView extends GetView<PerpindahanKeluarController> {
                   const SizedBox(
                     height: 12,
                   ),
-                  ketentuan(context)
+                  ketentuan(context),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Obx((() => Visibility(
+                      visible:
+                          controller.listPermohonan.isNotEmpty ? true : false,
+                      child: listPermohonan())))
                 ],
               ),
             )));
@@ -85,26 +92,23 @@ class PerpindahanKeluarView extends GetView<PerpindahanKeluarController> {
                 Obx((() => Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: (SizedBox(
-                        height: 24,
-                        child: controller.familyList[index]["status_hub_kel"] ==
-                                "KEPALA KELUARGA"
-                            ? ElevatedButton(
-                                onPressed: () {
-                                  Get.snackbar("INFO", "Belum di implementasi");
-                                },
-                                child: const Text(
-                                  "+ Pindahkan Satu Keluarga",
-                                  style: TextStyle(fontSize: 10),
-                                ))
-                            : ElevatedButton(
-                                onPressed: () {
-                                  Get.snackbar("INFO", "Belum di implementasi");
-                                },
-                                child: const Text(
-                                  "+ Pindahkan",
-                                  style: TextStyle(fontSize: 10),
-                                )),
-                      )),
+                          height: 24,
+                          child: controller.familyList[index]["nik"] ==
+                                  controller.userLogin["nik"]
+                              ? Text(
+                                  "(Pelapor)",
+                                  style: TextStyle(fontSize: 12),
+                                )
+                              : ElevatedButton(
+                                  onPressed: () {
+                                    Get.offAndToNamed(Routes.FORM_PINDAH,
+                                        arguments:
+                                            controller.familyList[index]);
+                                  },
+                                  child: const Text(
+                                    "+ Pindahkan",
+                                    style: TextStyle(fontSize: 10),
+                                  )))),
                     ))),
                 const SizedBox(
                   height: 8,
@@ -330,7 +334,9 @@ class PerpindahanKeluarView extends GetView<PerpindahanKeluarController> {
                   ))
                 ],
               ),
-              SizedBox(height: 4,),
+              SizedBox(
+                height: 4,
+              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -347,6 +353,78 @@ class PerpindahanKeluarView extends GetView<PerpindahanKeluarController> {
               )
             ],
           ),
+        )
+      ]),
+    );
+  }
+
+  Container listPermohonan() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(18),
+      color: Colors.white,
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        const Text(
+          "Daftar Permohonan Perpindahan",
+          style: TextStyle(fontSize: 12),
+        ),
+        const SizedBox(
+          height: 12,
+        ),
+        Table(
+          border: TableBorder.all(color: Colors.black),
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          children: [
+            const TableRow(
+                decoration: BoxDecoration(color: Colors.blue),
+                children: [
+                  TableCell(
+                    verticalAlignment: TableCellVerticalAlignment.middle,
+                    child: Padding(
+                      padding: EdgeInsets.all(6),
+                      child: Text(
+                        "NIK Pemohon",
+                        style: TextStyle(fontSize: 12, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  TableCell(
+                    verticalAlignment: TableCellVerticalAlignment.middle,
+                    child: Padding(
+                      padding: EdgeInsets.all(6),
+                      child: Text(
+                        "Status",
+                        style: TextStyle(fontSize: 12, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ]),
+            ...List.generate(controller.listPermohonan.length, (index) {
+              dynamic data = controller.listPermohonan[index];
+              return TableRow(children: [
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.middle,
+                  child: Padding(
+                    padding: EdgeInsets.all(6),
+                    child: Text(
+                      data["nik_pemohon"],
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ),
+                ),
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.middle,
+                  child: Padding(
+                    padding: EdgeInsets.all(6),
+                    child: Text(
+                      data["published_at"] == null ? "Proses" : "Siap Ambil",
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ),
+                ),
+              ]);
+            })
+          ],
         )
       ]),
     );

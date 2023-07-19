@@ -39,6 +39,16 @@ Map<String, dynamic> kartuIdentitasAnak = {
   ]
 };
 
+Map<String, dynamic> perpindahanKeluar = {
+  "title": "Perpindahan Keluar",
+  "children": [
+    "Fotocopy Kartu Tanda Penduduk (KTP)",
+    "Fotocopy Kartu Keluarga (KK",
+    "Formulir (F-1.23) diketahui lurah",
+    "Alamat lengkap daerah tujuan"
+  ]
+};
+
 Map<String, dynamic> ktpElektronik = {
   "title": "KTP Elektronik",
   "children": [
