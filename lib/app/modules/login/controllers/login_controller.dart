@@ -33,7 +33,7 @@ class LoginController extends GetxController with CacheManager {
       loading.value = true;
       checkUser(nikController.text, passwordController.text).then((auth) {
         if (auth) {
-          Get.offAllNamed(Routes.HOME);
+          Get.offAllNamed(Routes.LAYOUT);
         } else {
           Get.snackbar('Login', 'Invalid email or password');
         }
@@ -52,13 +52,19 @@ class LoginController extends GetxController with CacheManager {
         body: jsonEncode(<String, String>{"nik": nik, "password": password}));
 
     if (res.statusCode == 200) {
-      Map<String, dynamic> data =
-          (json.decode(res.body) as Map<String, dynamic>)["data"][0];
-      saveToken(data["token"]);
-      saveUser(jsonEncode(data["warga"]));
-      loading.value = false;
+      Map<String, dynamic> body = json.decode(res.body) as Map<String, dynamic>;
+      if (body['code'] == 200) {
+        Map<String, dynamic> data =
+            (json.decode(res.body) as Map<String, dynamic>)["data"][0];
+        saveToken(data["token"]);
+        saveUser(jsonEncode({...data["warga"], "email": data["email"]}));
+        loading.value = false;
 
-      return true;
+        return true;
+      } else {
+        loading.value = false;
+        return false;
+      }
     }
 
     loading.value = false;

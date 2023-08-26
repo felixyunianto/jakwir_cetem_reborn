@@ -14,6 +14,8 @@ class KiaController extends GetxController with CacheManager {
 
   var familyList = [].obs;
 
+  var listPermohonan = [].obs;
+
   @override
   void onReady() {
     // TODO: implement onReady
@@ -32,6 +34,24 @@ class KiaController extends GetxController with CacheManager {
     if (kikKKFormKey.currentState!.validate()) {
       getKKList(kkController.text).then((value) {
         familyList.value = value!;
+
+        familyList.value.asMap().forEach((index, element) {
+          if (element['status_hub_kel'] == "KEPALA KELUARGA") {
+            var kepalaKeluarga = familyList.value.removeAt(index);
+            familyList.value.insert(0, kepalaKeluarga);
+          }
+        });
+
+        familyList.value.asMap().forEach((index, element) {
+          if (element['status_hub_kel'].toLowerCase() == "istri") {
+            var istri = familyList.value.removeAt(index);
+            familyList.value.insert(1, istri);
+          }
+        });
+
+        (value).forEach((element) {
+          getListPermohonanKIA(element['nik']);
+        });
       });
     } else {
       Get.snackbar("Warning", "Isi field nomor kk terlebih dahulu");
@@ -69,5 +89,30 @@ class KiaController extends GetxController with CacheManager {
     duration = AgeCalculator.age(birthday);
     print(duration.years > 18);
     return duration;
+  }
+
+  Future<dynamic> getListPermohonanKIA(
+      String nikKepalaKeluarga) async {
+    Uri url =
+        Uri.parse("$BASE_URL_API/pemohonankia/pemohon/$nikKepalaKeluarga");
+    var res = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': "Bearer ${getToken()}"
+      },
+    );
+
+    if (res.statusCode == 200) {
+      List<dynamic> data =
+          (json.decode(res.body) as Map<String, dynamic>)["data"];
+
+      data.forEach((element) {
+        listPermohonan.add(Map<String, dynamic>.from(element));
+      });
+      return data;
+    } else {
+      listPermohonan.value = [];
+    }
   }
 }

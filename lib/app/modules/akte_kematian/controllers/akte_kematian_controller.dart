@@ -39,6 +39,20 @@ class AkteKematianController extends GetxController with CacheManager {
     if (kKFormKey.currentState!.validate()) {
       getKKList(kkController.text).then((value) {
         familyList.value = value!;
+
+        familyList.value.asMap().forEach((index, element) {
+          if (element['status_hub_kel'] == "KEPALA KELUARGA") {
+            var kepalaKeluarga = familyList.value.removeAt(index);
+            familyList.value.insert(0, kepalaKeluarga);
+          }
+        });
+
+        familyList.value.asMap().forEach((index, element) {
+          if (element['status_hub_kel'].toLowerCase() == "istri") {
+            var istri = familyList.value.removeAt(index);
+            familyList.value.insert(1, istri);
+          }
+        });
         value.forEach((element) {
           getListPermohonanAkteKematian(element["nik"]);
         });

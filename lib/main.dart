@@ -13,19 +13,19 @@ void main() async {
 }
 
 Map<int, Color> color = {
-  50: const Color.fromRGBO(24, 86, 180, .1),
-  100: const Color.fromRGBO(24, 86, 180, .2),
-  200: const Color.fromRGBO(24, 86, 180, .3),
-  300: const Color.fromRGBO(24, 86, 180, .4),
-  400: const Color.fromRGBO(24, 86, 180, .5),
-  500: const Color.fromRGBO(24, 86, 180, .6),
-  600: const Color.fromRGBO(24, 86, 180, .7),
-  700: const Color.fromRGBO(24, 86, 180, .8),
-  800: const Color.fromRGBO(24, 86, 180, .9),
-  900: const Color.fromRGBO(24, 86, 180, 1),
+  50: const Color.fromRGBO(91, 147, 196, .1),
+  100: const Color.fromRGBO(91, 147, 196, .2),
+  200: const Color.fromRGBO(91, 147, 196, .3),
+  300: const Color.fromRGBO(91, 147, 196, .4),
+  400: const Color.fromRGBO(91, 147, 196, .5),
+  500: const Color.fromRGBO(91, 147, 196, .6),
+  600: const Color.fromRGBO(91, 147, 196, .7),
+  700: const Color.fromRGBO(91, 147, 196, .8),
+  800: const Color.fromRGBO(91, 147, 196, .9),
+  900: const Color.fromRGBO(91, 147, 196, 1),
 };
 
-MaterialColor colorCustom = MaterialColor(0xFF1856B4, color);
+MaterialColor colorCustom = MaterialColor(0xFF5B93C4, color);
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

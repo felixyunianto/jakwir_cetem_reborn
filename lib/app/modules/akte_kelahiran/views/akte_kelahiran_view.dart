@@ -50,7 +50,21 @@ class AkteKelahiranView extends GetView<AkteKelahiranController> {
                   Obx((() => Visibility(
                       visible:
                           controller.listPermohonan.isNotEmpty ? true : false,
-                      child: listPermohonan())))
+                      child: listPermohonan()))),
+                  Obx((() => Visibility(
+                      visible: controller.familyList.isNotEmpty &&
+                              controller.listPermohonan.isEmpty
+                          ? true
+                          : false,
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(18),
+                        color: Colors.white,
+                        child: Center(
+                          child:
+                              Text("Belum ada data permohonan yang diajukan"),
+                        ),
+                      ))))
                 ],
               ),
             )));
@@ -73,38 +87,40 @@ class AkteKelahiranView extends GetView<AkteKelahiranController> {
           border: TableBorder.all(color: Colors.black),
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           children: [
-            const TableRow(decoration: BoxDecoration(color: Colors.blue), children: [
-              TableCell(
-                verticalAlignment: TableCellVerticalAlignment.middle,
-                child: Padding(
-                  padding: EdgeInsets.all(6),
-                  child: Text(
-                    "No. Register",
-                    style: TextStyle(fontSize: 12, color: Colors.white),
+            const TableRow(
+                decoration: BoxDecoration(color: Colors.blue),
+                children: [
+                  TableCell(
+                    verticalAlignment: TableCellVerticalAlignment.middle,
+                    child: Padding(
+                      padding: EdgeInsets.all(6),
+                      child: Text(
+                        "No. Register",
+                        style: TextStyle(fontSize: 12, color: Colors.white),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              TableCell(
-                verticalAlignment: TableCellVerticalAlignment.middle,
-                child: Padding(
-                  padding: EdgeInsets.all(6),
-                  child: Text(
-                    "Nama Bayi",
-                    style: TextStyle(fontSize: 12, color: Colors.white),
+                  TableCell(
+                    verticalAlignment: TableCellVerticalAlignment.middle,
+                    child: Padding(
+                      padding: EdgeInsets.all(6),
+                      child: Text(
+                        "Nama Bayi",
+                        style: TextStyle(fontSize: 12, color: Colors.white),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              TableCell(
-                verticalAlignment: TableCellVerticalAlignment.middle,
-                child: Padding(
-                  padding: EdgeInsets.all(6),
-                  child: Text(
-                    "Status",
-                    style: TextStyle(fontSize: 12, color: Colors.white),
+                  TableCell(
+                    verticalAlignment: TableCellVerticalAlignment.middle,
+                    child: Padding(
+                      padding: EdgeInsets.all(6),
+                      child: Text(
+                        "Status",
+                        style: TextStyle(fontSize: 12, color: Colors.white),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ]),
+                ]),
             ...List.generate(controller.listPermohonan.length, (index) {
               dynamic data = controller.listPermohonan[index];
               return TableRow(children: [
@@ -131,7 +147,6 @@ class AkteKelahiranView extends GetView<AkteKelahiranController> {
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.middle,
                   child: Padding(
-                    
                     padding: EdgeInsets.all(6),
                     child: Text(
                       data["published_at"] == null ? "Proses" : "Siap Ambil",
@@ -371,7 +386,7 @@ class AkteKelahiranView extends GetView<AkteKelahiranController> {
                       ),
                     ),
                     onPressed: () {
-                      Get.offAndToNamed(Routes.HOME);
+                      Get.offAndToNamed(Routes.LAYOUT);
                     },
                     child: const Text("Kembali")),
               )

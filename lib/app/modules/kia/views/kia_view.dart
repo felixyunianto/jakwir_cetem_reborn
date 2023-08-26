@@ -39,7 +39,26 @@ class KiaView extends GetView<KiaController> {
           ),
           Obx((() => Visibility(
               visible: controller.familyList.isNotEmpty ? true : false,
-              child: listkk())))
+              child: listkk()))),
+          const SizedBox(
+            height: 12,
+          ),
+          Obx((() => Visibility(
+              visible: controller.listPermohonan.isNotEmpty ? true : false,
+              child: listPermohonan()))),
+          Obx((() => Visibility(
+              visible: controller.familyList.isNotEmpty &&
+                      controller.listPermohonan.isEmpty
+                  ? true
+                  : false,
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(18),
+                color: Colors.white,
+                child: Center(
+                  child: Text("Belum ada data permohonan yang diajukan"),
+                ),
+              ))))
         ])),
       ),
     );
@@ -159,7 +178,7 @@ class KiaView extends GetView<KiaController> {
                       ),
                     ),
                     onPressed: () {
-                      Get.offAndToNamed(Routes.HOME);
+                      Get.offAndToNamed(Routes.LAYOUT);
                     },
                     child: const Text("Kembali")),
               )
@@ -297,6 +316,78 @@ class KiaView extends GetView<KiaController> {
           })),
         ],
       ),
+    );
+  }
+
+  Container listPermohonan() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(18),
+      color: Colors.white,
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        const Text(
+          "Daftar Permohonan Akte Kematian",
+          style: TextStyle(fontSize: 12),
+        ),
+        const SizedBox(
+          height: 12,
+        ),
+        Table(
+          border: TableBorder.all(color: Colors.black),
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          children: [
+            const TableRow(
+                decoration: BoxDecoration(color: Colors.blue),
+                children: [
+                  TableCell(
+                    verticalAlignment: TableCellVerticalAlignment.middle,
+                    child: Padding(
+                      padding: EdgeInsets.all(6),
+                      child: Text(
+                        "NIK Anak",
+                        style: TextStyle(fontSize: 12, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  TableCell(
+                    verticalAlignment: TableCellVerticalAlignment.middle,
+                    child: Padding(
+                      padding: EdgeInsets.all(6),
+                      child: Text(
+                        "Status",
+                        style: TextStyle(fontSize: 12, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ]),
+            ...List.generate(controller.listPermohonan.length, (index) {
+              dynamic data = controller.listPermohonan[index];
+              return TableRow(children: [
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.middle,
+                  child: Padding(
+                    padding: EdgeInsets.all(6),
+                    child: Text(
+                      data["nik_anak_id"] ?? "",
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ),
+                ),
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.middle,
+                  child: Padding(
+                    padding: EdgeInsets.all(6),
+                    child: Text(
+                      data["published_at"] == null ? "Proses" : "Siap Ambil",
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ),
+                ),
+              ]);
+            })
+          ],
+        )
+      ]),
     );
   }
 }

@@ -196,7 +196,7 @@ class FormReportController extends GetxController with CacheManager {
           Get.snackbar(
               "Berhasil", "Permohonan akta kematian berhasil terkirim");
           Timer(Duration(seconds: 2), () {
-            Get.offAndToNamed(Routes.HOME);
+            Get.offAndToNamed(Routes.LAYOUT);
           });
         } else {
           Get.snackbar("Gagal", "Permohonan akta kematian gagal terkirim");

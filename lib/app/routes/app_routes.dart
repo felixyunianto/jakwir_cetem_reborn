@@ -19,6 +19,10 @@ abstract class Routes {
   static const FORM_KIA = _Paths.FORM_KIA;
   static const FORM_PINDAH = _Paths.FORM_PINDAH;
   static const PERPINDAHAN_KELUAR = _Paths.PERPINDAHAN_KELUAR;
+  static const LAYOUT = _Paths.LAYOUT;
+  static const PROFIL = _Paths.PROFIL;
+  static const RESET_PASSWORD = _Paths.RESET_PASSWORD;
+  static const CHANGE_PASSWORD = _Paths.CHANGE_PASSWORD;
 }
 
 abstract class _Paths {
@@ -37,4 +41,8 @@ abstract class _Paths {
   static const FORM_KIA = '/form-kia';
   static const FORM_PINDAH = '/form-pindah';
   static const PERPINDAHAN_KELUAR = '/perpindahan-keluar';
+  static const LAYOUT = '/layout';
+  static const PROFIL = '/profil';
+  static const RESET_PASSWORD = '/reset-password';
+  static const CHANGE_PASSWORD = '/change-password';
 }

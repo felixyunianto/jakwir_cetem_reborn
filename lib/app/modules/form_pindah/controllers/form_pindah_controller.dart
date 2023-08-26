@@ -265,7 +265,7 @@ class FormPindahController extends GetxController with CacheManager {
           Get.snackbar(
               "Berhasil", "Permohonan Perpindahan Keluar berhasil terkirim");
           Timer(Duration(seconds: 2), () {
-            Get.offAndToNamed(Routes.HOME);
+            Get.offAndToNamed(Routes.LAYOUT);
           });
         } else {
           Get.snackbar("Gagal", "Permohonan Perpindahan Keluar gagal terkirim");

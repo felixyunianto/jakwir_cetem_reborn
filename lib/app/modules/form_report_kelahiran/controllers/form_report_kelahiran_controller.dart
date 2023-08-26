@@ -251,11 +251,11 @@ class FormReportKelahiranController extends GetxController with CacheManager {
   void submit() {
     if (akteKelahiranFormKey.currentState!.validate()) {
       submitAkteKelahiran().then((res) {
-        if (res.isNotEmpty) {
+        if (res != null) {
           Get.snackbar(
               "Berhasil", "Permohonan akta kelahiran berhasil terkirim");
           Timer(Duration(seconds: 2), () {
-            Get.offAndToNamed(Routes.HOME);
+            Get.offAndToNamed(Routes.LAYOUT);
           });
         } else {
           Get.snackbar("Gagal", "Permohonan akta kelahiran gagal terkirim");
@@ -293,15 +293,19 @@ class FormReportKelahiranController extends GetxController with CacheManager {
           "nik_saksi2_id": nikSaksi2Controller.text,
           "nik_pelapor_id": nikPelaporController.text
         }));
-    print(res.body);
-    if (res.statusCode == 200) {
-      // Map<String, dynamic> data = (json.decode(res.body) as Map<String, dynamic>)["data"];
-      // loading.value = false;
-      // print(data);
 
-      return res.body;
+    if (res.statusCode == 200) {
+      Map<String, dynamic> body =
+          (json.decode(res.body) as Map<String, dynamic>);
+
+      if (body['code'] == 200) {
+        loading.value = false;
+        return body;
+      } else {
+        return null;
+      }
     } else {
-      return {};
+      return null;
     }
   }
 }

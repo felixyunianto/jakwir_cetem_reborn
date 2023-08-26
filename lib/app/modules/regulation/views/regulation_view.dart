@@ -12,32 +12,54 @@ class RegulationView extends GetView<RegulationController> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      drawer: const NavigationDrawer(),
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Jakwir Cetem'),
-        centerTitle: true,
-        actions: [
-          Container(
-              padding: const EdgeInsets.all(12),
-              child: Image.asset("assets/images/logo-tegal.png"))
-        ],
-      ),
-      body: Container(
-        height: double.infinity,
-        width: size.width,
-        color: const Color(0xffF1F3F6),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              numberedListRegulation(akteKelahiranData, "NUMBER_LIST"),
-              numberedListRegulation(akteKematian, "NUMBER_LIST"),
-              numberedListRegulation(perpindahanKeluar, "NUMBER_LIST"),
-              numberedListRegulation(kartuIdentitasAnak, "NUMBER_LIST"),
-            ],
-          ),
+        title: Row(
+          children: [
+            Container(
+              padding: EdgeInsets.all(12),
+              child: Image.asset("assets/images/logo-tegal.png"),
+              width: 60,
+            ),
+            Text(
+              ('Jakwir Cetem').toUpperCase(),
+              style: TextStyle(color: Colors.white),
+            )
+          ],
         ),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
+      body: Stack(
+        children: [
+          Image.asset(
+            "assets/images/background.jpeg",
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            fit: BoxFit.cover,
+          ),
+          Container(
+            color: Color.fromRGBO(0, 0, 0, 0.1),
+          ),
+          Container(
+            height: double.infinity,
+            width: size.width,
+            margin: EdgeInsets.only(top: 100),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  numberedListRegulation(akteKelahiranData, "NUMBER_LIST"),
+                  numberedListRegulation(akteKematian, "NUMBER_LIST"),
+                  numberedListRegulation(perpindahanKeluar, "NUMBER_LIST"),
+                  numberedListRegulation(kartuIdentitasAnak, "NUMBER_LIST"),
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
@@ -45,7 +67,10 @@ class RegulationView extends GetView<RegulationController> {
   ExpansionTile numberedListRegulation(Map<String, dynamic> data, String type) {
     if (type == "NUMBER_LIST") {
       return ExpansionTile(
-        title: Text(data["title"]),
+        title: Text(
+          data["title"],
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
@@ -59,7 +84,7 @@ class RegulationView extends GetView<RegulationController> {
                     children: [
                       Text(
                         "${index + 1}",
-                        style: const TextStyle(height: 2),
+                        style: const TextStyle(height: 2, fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(
                         width: 8,
@@ -67,7 +92,7 @@ class RegulationView extends GetView<RegulationController> {
                       Expanded(
                           child: Text(
                         data['children'][index],
-                        style: const TextStyle(height: 2),
+                        style: const TextStyle(height: 2, fontWeight: FontWeight.w500),
                       ))
                     ],
                   );
@@ -105,8 +130,7 @@ class RegulationView extends GetView<RegulationController> {
                               return Container(
                                 padding: const EdgeInsets.only(left: 8),
                                 child: Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       "${indexChild + 1}",

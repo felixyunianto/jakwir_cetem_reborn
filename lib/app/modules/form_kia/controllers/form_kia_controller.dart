@@ -38,7 +38,7 @@ class FormKiaController extends GetxController with CacheManager {
         if (res.isNotEmpty) {
           Get.snackbar("Berhasil", "Permohonan KIA berhasil terkirim");
           Timer(Duration(seconds: 2), () {
-            Get.offAndToNamed(Routes.HOME);
+            Get.offAndToNamed(Routes.LAYOUT);
           });
         } else {
           Get.snackbar("Gagal", "Permohonan KIA gagal terkirim");
@@ -60,7 +60,9 @@ class FormKiaController extends GetxController with CacheManager {
           "img_anak": filePickerVal.value
         }));
 
+    print(res.body);
     Map<String, dynamic> data = json.decode(res.body);
+    print(data);
     if (data["code"] != 500) {
       loading.value = false;
 

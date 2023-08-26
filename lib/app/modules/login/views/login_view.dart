@@ -179,6 +179,9 @@ class LoginView extends GetView<LoginController> {
                                     Align(
                                       alignment: Alignment.centerRight,
                                       child: GestureDetector(
+                                        onTap: () {
+                                          Get.offAndToNamed(Routes.RESET_PASSWORD);
+                                        },
                                         child: Text("Lupa sandi?",
                                             style: TextStyle(
                                                 fontSize: 12,

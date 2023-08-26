@@ -49,7 +49,18 @@ class AkteKematianView extends GetView<AkteKematianController> {
                   Obx((() => Visibility(
                       visible:
                           controller.listPermohonan.isNotEmpty ? true : false,
-                      child: listPermohonan())))
+                      child: listPermohonan()))),
+                  Obx((() => Visibility(
+                      visible:
+                          controller.familyList.isNotEmpty && controller.listPermohonan.isEmpty ? true : false,
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(18),
+                        color: Colors.white,
+                        child: Center(
+                          child: Text("Belum ada data permohonan yang diajukan"),
+                        ),
+                      ))))
                 ],
               ),
             )));
@@ -244,7 +255,7 @@ class AkteKematianView extends GetView<AkteKematianController> {
                       ),
                     ),
                     onPressed: () {
-                      Get.offAndToNamed(Routes.HOME);
+                      Get.offAndToNamed(Routes.LAYOUT);
                     },
                     child: const Text("Kembali")),
               )

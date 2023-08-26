@@ -9,7 +9,6 @@ import 'package:jakwir_cetem_reborn/app/routes/app_pages.dart';
 class NavigationDrawer extends StatelessWidget {
   const NavigationDrawer({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -21,10 +20,12 @@ class NavigationDrawer extends StatelessWidget {
               icon: Icons.home,
               text: "Halaman Utama",
               onTap: () => navigate(0),
-              tileColor: Get.currentRoute == Routes.HOME || Get.currentRoute == Routes.SPLASH_SCREEN
+              tileColor: Get.currentRoute == Routes.HOME ||
+                      Get.currentRoute == Routes.SPLASH_SCREEN
                   ? Colors.white
                   : const Color(0xFF1856B4),
-              textIconColor: Get.currentRoute == Routes.HOME || Get.currentRoute == Routes.SPLASH_SCREEN
+              textIconColor: Get.currentRoute == Routes.HOME ||
+                      Get.currentRoute == Routes.SPLASH_SCREEN
                   ? Colors.black
                   : Colors.white),
           buildDrawerItem(
@@ -47,7 +48,16 @@ class NavigationDrawer extends StatelessWidget {
               textIconColor: Get.currentRoute == Routes.USAGE_GUIDE
                   ? Colors.black
                   : Colors.white),
-          
+          buildDrawerItem(
+              icon: Icons.person,
+              text: "Profil Akun",
+              onTap: () => {},
+              tileColor: Get.currentRoute == Routes.REGULATION
+                  ? Colors.white
+                  : const Color(0xFF1856B4),
+              textIconColor: Get.currentRoute == Routes.REGULATION
+                  ? Colors.black
+                  : Colors.white),
           buildDrawerItem(
               icon: Icons.login_rounded,
               text: "Keluar Akun",
@@ -70,7 +80,9 @@ class NavigationDrawer extends StatelessWidget {
       currentAccountPictureSize: Size(135, 93),
       currentAccountPicture: Container(
         padding: EdgeInsets.only(bottom: 8),
-        child: Image(image: AssetImage('assets/images/dukcapil-logo.png'), fit: BoxFit.cover),
+        child: Image(
+            image: AssetImage('assets/images/dukcapil-logo.png'),
+            fit: BoxFit.cover),
       ),
     );
   }
@@ -82,7 +94,6 @@ class NavigationDrawer extends StatelessWidget {
     required Color? tileColor,
     required VoidCallback onTap,
   }) {
-    
     return Material(
       child: ListTile(
         visualDensity: VisualDensity(horizontal: 0, vertical: -2),
@@ -105,7 +116,7 @@ class NavigationDrawer extends StatelessWidget {
       Get.offAndToNamed(Routes.REGULATION);
     } else if (index == 2) {
       Get.offAndToNamed(Routes.USAGE_GUIDE);
-    }else if( index == 3) {
+    } else if (index == 3) {
       Get.offAndToNamed(Routes.LOGIN);
       authenticationManager.logOut();
     }

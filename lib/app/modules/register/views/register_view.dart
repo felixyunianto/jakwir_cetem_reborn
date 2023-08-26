@@ -74,6 +74,49 @@ class RegisterView extends GetView<RegisterController> {
                                             BorderRadius.circular(10.0),
                                       ),
                                       child: TextFormField(
+                                        validator: controller.validator,
+                                        controller: controller.emailController,
+                                        style: const TextStyle(
+                                            letterSpacing: 0.4,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xff5B5B5B),
+                                            fontSize: 12),
+                                        decoration: const InputDecoration(
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    horizontal: 24),
+                                            border: InputBorder.none,
+                                            filled: true,
+                                            floatingLabelBehavior:
+                                                FloatingLabelBehavior.never,
+                                            labelText: "Email",
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10.0)),
+                                              borderSide: BorderSide(
+                                                  color: Color(0xFFF1F3F6)),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10.0)),
+                                              borderSide: BorderSide(
+                                                  color: Color(0xFFF1F3F6)),
+                                            ),
+                                            hintStyle: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 23,
+                                                fontWeight: FontWeight.bold)),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 24,
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      child: TextFormField(
                                         keyboardType: TextInputType.number,
                                         validator: controller.validator,
                                         controller: controller.niKController,

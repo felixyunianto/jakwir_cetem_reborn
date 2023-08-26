@@ -10,6 +10,7 @@ import 'package:jakwir_cetem_reborn/app/routes/app_pages.dart';
 class RegisterController extends GetxController {
   GlobalKey<FormState> registerKey =
       GlobalKey<FormState>(debugLabel: '_registerKey');
+  final emailController = TextEditingController();
   final niKController = TextEditingController();
   final kkController = TextEditingController();
   final passwordController = TextEditingController();
@@ -54,24 +55,27 @@ class RegisterController extends GetxController {
         body: jsonEncode(<String, String>{
           "nik": niKController.text,
           "nokk": kkController.text,
+          "email" : emailController.text,
           "password": passwordController.text
         }));
 
-    Map<String, dynamic> data = (json.decode(res.body) as Map<String, dynamic>);
+    if (res.statusCode == 200) {
+      Map<String, dynamic> data =
+          (json.decode(res.body) as Map<String, dynamic>);
 
-    if (data["code"] == 200) {
-      loading.value = false;
-      Get.snackbar("Info", data['message']);
-      return true;
+      if (data["code"] == 200) {
+        loading.value = false;
+        Get.snackbar("Info", data['message']);
+        return true;
+      } else {
+        Get.snackbar("Error", data['message']);
+        loading.value = false;
+
+        return false;
+      }
     } else {
-      print(jsonEncode(<String, String>{
-          "nik": niKController.text,
-          "nokk": kkController.text,
-          "password": passwordController.text
-        }));
-      Get.snackbar("Error", data['message']);
+      Get.snackbar("Error", "Terjadi kesalahan pada server");
       loading.value = false;
-
       return false;
     }
   }

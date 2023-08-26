@@ -28,6 +28,20 @@ class PerpindahanKeluarController extends GetxController with CacheManager {
     if (perpindahanKeluarKKFormKey.currentState!.validate()) {
       getKKList(kkController.text).then((value) {
         familyList.value = value!;
+
+        familyList.value.asMap().forEach((index, element) {
+          if (element['status_hub_kel'] == "KEPALA KELUARGA") {
+            var kepalaKeluarga = familyList.value.removeAt(index);
+            familyList.value.insert(0, kepalaKeluarga);
+          }
+        });
+
+        familyList.value.asMap().forEach((index, element) {
+          if (element['status_hub_kel'].toLowerCase() == "istri") {
+            var istri = familyList.value.removeAt(index);
+            familyList.value.insert(1, istri);
+          }
+        });
         value.forEach((element) {
           getListPermohonanPindah(element['nik']);
         });
@@ -78,7 +92,7 @@ class PerpindahanKeluarController extends GetxController with CacheManager {
       data.forEach((element) {
         listPermohonan.add(Map<String, dynamic>.from(element));
       });
-      
+
       return data;
     } else {
       listPermohonan.value = [];

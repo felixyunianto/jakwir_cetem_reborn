@@ -10,6 +10,6 @@ class SplashScreenController extends GetxController with CacheManager {
     _authenticationManager.checkLoginStatus();
 
     //Simulate other services for 3 seconds
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 1));
   }
 }
